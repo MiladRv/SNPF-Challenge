@@ -15,7 +15,7 @@ public sealed class OrderTests
         var someUserId = Guid.NewGuid();
 
         // act
-        var actual = new Order(someProductId, someUserId);
+        var actual = new Order(someUserId, someProductId);
 
         // assert
         actual

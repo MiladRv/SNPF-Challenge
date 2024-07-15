@@ -16,10 +16,19 @@ public sealed class User : AggregateRoot<Guid>
     }
 
     public string Name { get; private set; }
-    public ICollection<Order> Orders { get; set; }
+    public ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public void Edit(string name)
     {
         Name = name;
+    }
+
+    public Order AddOrder(Guid productId)
+    {
+        var order = new Order(Id, productId);
+
+        Orders.Add(order);
+
+        return order;
     }
 }
