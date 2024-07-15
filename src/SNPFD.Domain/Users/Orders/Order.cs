@@ -10,8 +10,7 @@ public sealed class Order : EntityBase<Guid>
         
     }
     
-    public Order(Guid productId,
-        Guid userId)
+    public Order(Guid userId, Guid productId)
     {
         Id = Guid.NewGuid();
         CreationDate = DateTime.UtcNow;
