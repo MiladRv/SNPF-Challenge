@@ -1,4 +1,4 @@
-using SNPFD.Domain.Users.Orders;
+using SNPFD.Domain.Orders;
 
 namespace SNPFD.Domain.Users;
 
@@ -21,17 +21,5 @@ public class User : AggregateRoot<Guid>
     public void Edit(string name)
     {
         Name = name;
-    }
-
-    public Order AddOrder(Guid productId)
-    {
-        if (Orders.Any(o => o.ProductId.Equals(productId)))
-            throw new Exception("user has already bought this product");
-
-        var order = new Order(Id, productId);
-
-        Orders.Add(order);
-
-        return order;
     }
 }

@@ -1,4 +1,4 @@
-namespace SNPFD.Application.Purchases.Dtos;
+namespace SNPFD.Application.Orders.Dtos;
 
 public sealed record PurchaseDto(
     Guid UserId,
@@ -6,5 +6,6 @@ public sealed record PurchaseDto(
     Guid ProductId,
     string ProductTitle,
     ulong Price,
+    ulong DiscountedPrice,
     Guid OrderId,
     DateTime PurchaseDate);

@@ -23,8 +23,6 @@ public sealed class UnitOfWork(
         {
             logger.LogError(ex, ex.Message);
 
-            await context.Database.RollbackTransactionAsync();
-            
             throw;
         }
 

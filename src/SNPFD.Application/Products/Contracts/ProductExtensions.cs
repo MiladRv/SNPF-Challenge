@@ -11,6 +11,7 @@ internal static class ProductExtensions
             product.Title,
             product.InventoryCount,
             product.Price,
+            product.DiscountedPrice,
             product.Discount);
     }
 }
