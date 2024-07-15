@@ -1,4 +1,4 @@
-namespace SNPFD.Domain.Users.Orders;
+namespace SNPFD.Domain.Orders;
 
 public sealed class Order : EntityBase<int>
 {
