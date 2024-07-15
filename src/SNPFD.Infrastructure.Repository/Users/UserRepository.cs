@@ -2,7 +2,7 @@ using SNPFD.Application.Users.Contracts;
 using SNPFD.Domain.Users;
 using SNPFD.Infrastructure.Repository.DbContexts;
 
-namespace SNPFD.Infrastructure.Repository;
+namespace SNPFD.Infrastructure.Repository.Users;
 
 public sealed class UserRepository(SNPFDDbContext dbContext)
     : BaseRepository<User, Guid>(dbContext), IUserRepository

@@ -2,7 +2,7 @@ using SNPFD.Domain.Users.Orders;
 
 namespace SNPFD.Domain.Users;
 
-public sealed class User : AggregateRoot<Guid>
+public class User : AggregateRoot<Guid>
 {
     //note: ef core needs parameterless constructor
     public User()
@@ -16,7 +16,7 @@ public sealed class User : AggregateRoot<Guid>
     }
 
     public string Name { get; private set; }
-    public ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<Order> Orders { get; init; } = new List<Order>();
 
     public void Edit(string name)
     {

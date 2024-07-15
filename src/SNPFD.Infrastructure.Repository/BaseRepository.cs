@@ -10,12 +10,13 @@ public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
     where TKey : struct
 {
     private bool _disposed;
-   
+    protected readonly DbSet<TEntity> DbSet = dbContext.Set<TEntity>();
+
     public async Task<TEntity> AddAsync(TEntity entity,
         bool saveChanges = true,
         CancellationToken cancellationToken = new())
     {
-        var entityEntry = await dbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
+        var entityEntry = await DbSet.AddAsync(entity, cancellationToken);
 
         if (saveChanges)
             await dbContext.SaveChangesAsync(cancellationToken);
@@ -27,9 +28,7 @@ public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
         bool saveChanges = true,
         CancellationToken cancellationToken = new())
     {
-        var entry = dbContext.Entry(entity);
-
-        entry.Property("IsDeleted").CurrentValue = true;
+        DbSet.Remove(entity);
 
         if (saveChanges)
             await dbContext.SaveChangesAsync(cancellationToken);
@@ -42,7 +41,7 @@ public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
         if (!dbContext.ChangeTracker.HasChanges())
             return entity;
 
-        var entityEntry = dbContext.Set<TEntity>().Update(entity);
+        var entityEntry = DbSet.Update(entity);
 
         if (saveChanges)
             await dbContext.SaveChangesAsync(cancellationToken);
@@ -51,17 +50,16 @@ public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
     }
 
     public async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken) =>
-        await dbContext
-            .Set<TEntity>()
+        await DbSet
             .FirstOrDefaultAsync(t => t.Id.Equals(id), cancellationToken);
 
-    protected virtual async void Dispose(bool disposing)
+    protected virtual void Dispose(bool disposing)
     {
         if (!_disposed)
         {
             if (disposing)
             {
-                await dbContext.DisposeAsync();
+                dbContext.Dispose();
             }
         }
 
