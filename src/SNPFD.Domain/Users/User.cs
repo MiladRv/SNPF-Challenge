@@ -11,10 +11,6 @@ public sealed class User : AggregateRoot<Guid>
 
     public User(string name)
     {
-        if (name.Length >= 40)
-            throw new ArgumentOutOfRangeException(paramName: nameof(name),
-                message: "must be less than 40 characters");
-
         Id = Guid.NewGuid();
         Name = name;
     }
