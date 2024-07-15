@@ -44,6 +44,9 @@ public sealed class Product : AggregateRoot<Guid>
 
     public void DecreaseInventoryCount()
     {
-        InventoryCount--;
+        if (InventoryCount > 0)
+            InventoryCount--;
+        else
+            throw new Exception("inventory count is not enough");
     }
 }
