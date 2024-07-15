@@ -7,8 +7,8 @@ public sealed class User : AggregateRoot<Guid>
     //note: ef core needs parameterless constructor
     public User()
     {
-        
     }
+
     public User(string name)
     {
         Id = Guid.NewGuid();
