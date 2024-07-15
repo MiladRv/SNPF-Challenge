@@ -9,7 +9,8 @@ namespace SNPFD.Application.Purchases;
 
 public sealed class PurchaseAppService(
     IProductRepository productRepository,
-    IUserRepository userRepository) : IPurchaseAppService
+    IUserRepository userRepository,
+    IUnitOfWork unitOfWork) : IPurchaseAppService
 {
     public async Task<PurchaseDto> CreateAsync(PurchaseInputDto inputDto,
         CancellationToken cancellationToken = default)
@@ -23,10 +24,17 @@ public sealed class PurchaseAppService(
         var order = user.AddOrder(product.Id);
 
         await productRepository
-            .UpdateAsync(product, cancellationToken);
+            .UpdateAsync(product,
+                saveChanges: false,
+                cancellationToken: cancellationToken);
 
         await userRepository
-            .UpdateAsync(user, cancellationToken);
+            .UpdateAsync(user,
+                saveChanges: false,
+                cancellationToken: cancellationToken);
+
+        await unitOfWork.CommitAsync();
+
 
         return new PurchaseDto(user.Id,
             user.Name,
@@ -37,7 +45,9 @@ public sealed class PurchaseAppService(
             order.CreationDate);
     }
 
-    private async Task<User> FindAndValidateUser(Guid userId, CancellationToken cancellationToken)
+
+    private async Task<User> FindAndValidateUser(Guid userId,
+        CancellationToken cancellationToken = default)
     {
         var user = await userRepository
             .GetByIdAsync(userId, cancellationToken);
@@ -48,7 +58,8 @@ public sealed class PurchaseAppService(
         return user;
     }
 
-    private async Task<Product> FindAndValidateProduct(Guid productId, CancellationToken cancellationToken)
+    private async Task<Product> FindAndValidateProduct(Guid productId,
+        CancellationToken cancellationToken = default)
     {
         var product = await productRepository
             .GetByIdAsync(productId, cancellationToken);

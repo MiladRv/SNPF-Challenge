@@ -16,7 +16,7 @@ public sealed class OrderAppService(IUserRepository repository) : IOrderAppServi
         var order = user.AddOrder(productId);
 
         await repository
-            .UpdateAsync(user, cancellationToken);
+            .UpdateAsync(user, cancellationToken:cancellationToken);
 
         return order.ToDto();
     }

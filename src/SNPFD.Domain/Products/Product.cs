@@ -1,6 +1,6 @@
 namespace SNPFD.Domain.Products;
 
-public sealed class Product : AggregateRoot<Guid>
+public class Product : AggregateRoot<Guid>
 {
     //note: ef core needs parameterless constructor
     public Product()
