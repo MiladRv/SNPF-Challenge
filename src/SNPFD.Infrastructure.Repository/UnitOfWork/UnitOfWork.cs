@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SNPFD.Application;
 using SNPFD.Infrastructure.Repository.DbContexts;
 
 namespace SNPFD.Infrastructure.Repository.UnitOfWork;
@@ -23,6 +24,8 @@ public sealed class UnitOfWork(
         {
             logger.LogError(ex, ex.Message);
 
+            await context.Database.RollbackTransactionAsync();
+            
             throw;
         }
 

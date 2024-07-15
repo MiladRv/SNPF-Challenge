@@ -1,4 +1,4 @@
-﻿namespace SNPFD.Infrastructure.Repository.UnitOfWork;
+﻿namespace SNPFD.Application;
 
 public interface IUnitOfWork
 {
