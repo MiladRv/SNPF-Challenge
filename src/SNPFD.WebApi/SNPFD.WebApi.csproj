@@ -7,6 +7,8 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <AssemblyName>SNPFD.WebApi</AssemblyName>
         <RootNamespace>SNPFD.WebApi</RootNamespace>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
     </PropertyGroup>
 
     <ItemGroup>
