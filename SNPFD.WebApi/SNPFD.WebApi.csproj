@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <AssemblyName>SNPFD.WebApi</AssemblyName>
+        <RootNamespace>SNPFD.WebApi</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
