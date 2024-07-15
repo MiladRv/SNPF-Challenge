@@ -1,7 +1,6 @@
 using SNPFD.Domain.Products;
-using SNPFD.Domain.Users;
 
-namespace SNPFD.Domain.Orders;
+namespace SNPFD.Domain.Users.Orders;
 
 public sealed class Order : EntityBase<Guid>
 {
