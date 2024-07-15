@@ -10,7 +10,7 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
     {
         var user = new User(name);
 
-        await repository.AddAsync(user, cancellationToken);
+        await repository.AddAsync(user, cancellationToken:cancellationToken);
 
         return user.ToDto();
     }
@@ -31,7 +31,7 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
         user.Edit(name);
 
         await repository
-            .UpdateAsync(user, cancellationToken);
+            .UpdateAsync(user, cancellationToken:cancellationToken);
 
         return user.ToDto();
     }
@@ -41,7 +41,7 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
         var user = await FindAndValidate(userId, cancellationToken);
 
         await repository
-            .DeleteAsync(user, cancellationToken);
+            .DeleteAsync(user, cancellationToken:cancellationToken);
     }
 
     private async Task<User> FindAndValidate(Guid userId,

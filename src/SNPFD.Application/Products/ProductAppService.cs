@@ -36,7 +36,7 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
             cancellationToken);
 
         await repository
-            .DeleteAsync(product, cancellationToken);
+            .DeleteAsync(product, cancellationToken: cancellationToken);
     }
 
     public async Task<ProductDto> EditAsync(EditProductInputDto inputDto,
@@ -50,7 +50,7 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
             inputDto.Discount);
 
         await repository
-            .UpdateAsync(product, cancellationToken);
+            .UpdateAsync(product, cancellationToken: cancellationToken);
 
         return product.ToDto();
     }
@@ -63,7 +63,7 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         product.DecreaseInventoryCount();
 
         await repository
-            .UpdateAsync(product, cancellationToken);
+            .UpdateAsync(product, cancellationToken: cancellationToken);
 
         return product.ToDto();
     }

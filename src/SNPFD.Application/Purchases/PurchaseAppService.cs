@@ -23,10 +23,10 @@ public sealed class PurchaseAppService(
         var order = user.AddOrder(product.Id);
 
         await productRepository
-            .UpdateAsync(product, cancellationToken);
+            .UpdateAsync(product,cancellationToken: cancellationToken);
 
         await userRepository
-            .UpdateAsync(user, cancellationToken);
+            .UpdateAsync(user,cancellationToken: cancellationToken);
 
         return new PurchaseDto(user.Id,
             user.Name,
