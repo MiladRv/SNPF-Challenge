@@ -2,6 +2,7 @@ using Newtonsoft.Json.Serialization;
 using Serilog;
 using SNPFD.Application;
 using SNPFD.Infrastructure.Repository;
+using SNPFD.WebApi.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ builder.Services.RegisterRepositories();
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
+builder.Services.AddHostedService<SeedDataWorker>();
 
 var app = builder.Build();
 

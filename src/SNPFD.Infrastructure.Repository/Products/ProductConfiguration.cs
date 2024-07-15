@@ -9,6 +9,10 @@ public sealed class ProductConfiguration :IEntityTypeConfiguration<Product>
     public void Configure(EntityTypeBuilder<Product> builder)
     {
         builder
+            .Property(product => product.Id)
+            .ValueGeneratedNever();
+        
+        builder
             .HasKey(product => product.Id);
 
         builder

@@ -12,12 +12,13 @@ public sealed class PurchaseAppService(
     IUserRepository userRepository,
     IUnitOfWork unitOfWork) : IPurchaseAppService
 {
-    public async Task<PurchaseDto> CreateAsync(PurchaseInputDto inputDto,
+    public async Task<PurchaseDto> CreateAsync(Guid userId, 
+        Guid productId,
         CancellationToken cancellationToken = default)
     {
-        var product = await FindAndValidateProduct(inputDto.ProductId, cancellationToken);
+        var product = await FindAndValidateProduct(productId, cancellationToken);
 
-        var user = await FindAndValidateUser(inputDto.UserId, cancellationToken);
+        var user = await FindAndValidateUser(userId, cancellationToken);
 
         product.DecreaseInventoryCount();
 

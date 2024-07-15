@@ -10,13 +10,21 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
+            .Property(user => user.Id)
+            .ValueGeneratedNever();
+        
+        builder
             .HasKey(user => user.Id);
 
         builder.OwnsMany(
             user => user.Orders, navigationBuilder =>
             {
                 navigationBuilder
-                    .WithOwner(order => order.User)
+                    .Property(order => order.Id)
+                    .ValueGeneratedNever();
+                
+                navigationBuilder
+                    .WithOwner()
                     .HasForeignKey(order => order.UserId);
                 
                 navigationBuilder
