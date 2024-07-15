@@ -35,6 +35,7 @@ public sealed class PurchaseAppService(
 
         await unitOfWork.CommitAsync();
 
+
         return new PurchaseDto(user.Id,
             user.Name,
             product.Id,
@@ -43,6 +44,7 @@ public sealed class PurchaseAppService(
             order.Id,
             order.CreationDate);
     }
+
 
     private async Task<User> FindAndValidateUser(Guid userId,
         CancellationToken cancellationToken = default)

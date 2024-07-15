@@ -68,6 +68,19 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         return product.ToDto();
     }
 
+    public async Task<ProductDto> DecreaseInventoryCount(Guid productId,
+        CancellationToken cancellationToken = default)
+    {
+        var product = await FindAndValidate(productId, cancellationToken);
+
+        product.DecreaseInventoryCount();
+
+        await repository
+            .UpdateAsync(product, cancellationToken);
+
+        return product.ToDto();
+    }
+
     private async Task<Product> FindAndValidate(Guid productId,
         CancellationToken cancellationToken = default)
     {
