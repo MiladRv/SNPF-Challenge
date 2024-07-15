@@ -41,4 +41,9 @@ public sealed class Product : AggregateRoot<Guid>
             throw new ArgumentOutOfRangeException(paramName: nameof(title),
                 message: "must be less than 40 characters");
     }
+
+    public void DecreaseInventoryCount()
+    {
+        InventoryCount--;
+    }
 }

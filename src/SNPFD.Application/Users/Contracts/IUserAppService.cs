@@ -7,7 +7,7 @@ public interface IUserAppService
     Task<UserDto> CreateAsync(string name,
         CancellationToken cancellationToken = default);
 
-    Task<UserDto> FindById(Guid userId,
+    Task<UserDto> FindByIdAsync(Guid userId,
         CancellationToken cancellationToken = default);
 
     Task<UserDto> EditAsync(Guid userId,

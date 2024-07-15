@@ -1,4 +1,4 @@
-namespace SNPFD.Application.Products.Requests;
+namespace SNPFD.Application.Products.Dtos;
 
 public sealed record CreateProductInputDto(string Title,
     ulong Price,

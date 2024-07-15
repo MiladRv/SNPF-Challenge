@@ -1,5 +1,4 @@
 using SNPFD.Application.Products.Dtos;
-using SNPFD.Application.Products.Requests;
 
 namespace SNPFD.Application.Products.Contracts;
 
@@ -15,5 +14,8 @@ public interface IProductAppService
         CancellationToken cancellationToken = default);
 
     Task<ProductDto> EditAsync(EditProductInputDto inputDto,
+        CancellationToken cancellationToken = default);
+
+    Task DecreaseInventoryCount(Guid productId,
         CancellationToken cancellationToken = default);
 }
