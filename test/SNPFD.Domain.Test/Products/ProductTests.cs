@@ -3,7 +3,7 @@ using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
 using SNPFD.Domain.Products;
 
-namespace SNPFD.Domain.Test;
+namespace SNPFD.Domain.Test.Products;
 
 public class ProductTests
 {
@@ -73,5 +73,53 @@ public class ProductTests
             .ParamName
             .Should()
             .Be("title");
+    }
+
+    [Fact]
+    public void DecreaseInventoryCount_ThrowException_InventoryCountIsEqualZero()
+    {
+        // arrange
+        var someProduct = new ProductBuilder()
+            .WithInventoryCount(0)
+            .Build();
+
+        // act
+        void Act()
+        {
+            someProduct.DecreaseInventoryCount();
+        }
+
+        // assert
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(Act);
+
+        exception
+            .ParamName
+            .Should()
+            .Be(nameof(Product.InventoryCount));
+    }
+
+    [Fact]
+    public void DecreaseInventoryCount_DecreaseOne()
+    {
+        // arrange
+        var actual = new ProductBuilder()
+            .WithInventoryCount(1)
+            .Build();
+
+        var expected = new ProductBuilder()
+            .WithTitle(actual.Title)
+            .WithPrice(actual.Price)
+            .WithInventoryCount(0)
+            .WithDiscount(actual.Discount)
+            .Build();
+
+        // act
+        actual.DecreaseInventoryCount();
+
+        // assert
+        actual
+            .Should()
+            .BeEquivalentTo(expected, options => options
+                .Excluding(product => product.Id));
     }
 }
