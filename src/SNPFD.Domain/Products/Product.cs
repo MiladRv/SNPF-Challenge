@@ -52,4 +52,9 @@ public class Product : AggregateRoot<Guid>
 
         InventoryCount--;
     }
+
+    public void EditInventoryCount(uint inventoryCount)
+    {
+        InventoryCount = inventoryCount;
+    }
 }

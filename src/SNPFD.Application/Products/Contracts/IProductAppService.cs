@@ -16,6 +16,9 @@ public interface IProductAppService
     Task<ProductDto> EditAsync(EditProductInputDto inputDto,
         CancellationToken cancellationToken = default);
 
-    Task<ProductDto> DecreaseInventoryCount(Guid productId,
+    Task<ProductDto> EditInventoryCountAsync(Guid productId, 
+        uint inventoryCount, 
         CancellationToken cancellationToken = default);
+
+    IEnumerable<ProductDto> GetAll(ushort pageIndex, ushort pageSize);
 }
