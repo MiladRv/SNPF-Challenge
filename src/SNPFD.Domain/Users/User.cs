@@ -25,6 +25,9 @@ public sealed class User : AggregateRoot<Guid>
 
     public Order AddOrder(Guid productId)
     {
+        if (Orders.Any(o => o.ProductId.Equals(productId)))
+            throw new Exception("user has already bought this product");
+
         var order = new Order(Id, productId);
 
         Orders.Add(order);

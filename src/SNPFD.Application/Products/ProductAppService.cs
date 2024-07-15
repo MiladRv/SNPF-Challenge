@@ -1,6 +1,5 @@
 using SNPFD.Application.Products.Contracts;
 using SNPFD.Application.Products.Dtos;
-using SNPFD.Application.Products.Requests;
 using SNPFD.Domain.Products;
 
 namespace SNPFD.Application.Products;
@@ -49,6 +48,19 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         product.Edit(inputDto.Title,
             inputDto.Price,
             inputDto.Discount);
+
+        await repository
+            .UpdateAsync(product, cancellationToken);
+
+        return product.ToDto();
+    }
+
+    public async Task<ProductDto> DecreaseInventoryCount(Guid productId,
+        CancellationToken cancellationToken = default)
+    {
+        var product = await FindAndValidate(productId, cancellationToken);
+
+        product.DecreaseInventoryCount();
 
         await repository
             .UpdateAsync(product, cancellationToken);

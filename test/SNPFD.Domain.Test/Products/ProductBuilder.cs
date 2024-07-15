@@ -2,7 +2,7 @@ using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
 using SNPFD.Domain.Products;
 
-namespace SNPFD.Domain.Test;
+namespace SNPFD.Domain.Test.Products;
 
 public sealed class ProductBuilder
 {

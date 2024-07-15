@@ -15,7 +15,7 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
         return user.ToDto();
     }
 
-    public async Task<UserDto> FindById(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<UserDto> FindByIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var user = await FindAndValidate(userId,
             cancellationToken);
