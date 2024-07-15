@@ -9,9 +9,7 @@ public sealed class Product : AggregateRoot<Guid>
 
     public Product(string title, uint inventoryCount, ulong price, double discount)
     {
-        if (title.Length >= 40)
-            throw new ArgumentOutOfRangeException(paramName: nameof(title),
-                message: "must be less than 40 characters");
+        ValidateTitle(title);
 
         Id = Guid.NewGuid();
         Title = title;
@@ -20,8 +18,27 @@ public sealed class Product : AggregateRoot<Guid>
         Discount = discount;
     }
 
+    public void Edit(string title,
+        ulong price,
+        double discount)
+    {
+        ValidateTitle(title);
+
+        Title = title;
+        Price = price;
+        Discount = discount;
+    }
+
     public string Title { get; private set; }
     public uint InventoryCount { get; private set; }
     public ulong Price { get; private set; }
     public double Discount { get; private set; }
+
+
+    private void ValidateTitle(string title)
+    {
+        if (title.Length >= 40)
+            throw new ArgumentOutOfRangeException(paramName: nameof(title),
+                message: "must be less than 40 characters");
+    }
 }
