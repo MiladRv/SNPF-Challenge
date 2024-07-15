@@ -4,6 +4,7 @@ namespace SNPFD.Application.Purchases.Contracts;
 
 public interface IPurchaseAppService
 {
-    Task<PurchaseDto> CreateAsync(PurchaseInputDto inputDto,
+    Task<PurchaseDto> CreateAsync(Guid userId,
+        Guid productId,
         CancellationToken cancellationToken = default);
 }

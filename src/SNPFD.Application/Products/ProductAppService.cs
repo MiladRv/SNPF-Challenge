@@ -23,8 +23,7 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
     public async Task<ProductDto> FindByIdAsync(Guid productId,
         CancellationToken cancellationToken = default)
     {
-        var product = await FindAndValidate(productId,
-            cancellationToken);
+        var product = await FindAndValidate(productId, cancellationToken);
 
         return product.ToDto();
     }
@@ -55,12 +54,12 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         return product.ToDto();
     }
 
-    public async Task<ProductDto> DecreaseInventoryCount(Guid productId,
-        CancellationToken cancellationToken = default)
+ 
+    public async Task<ProductDto> EditInventoryCountAsync(Guid productId, uint inventoryCount, CancellationToken cancellationToken = default)
     {
         var product = await FindAndValidate(productId, cancellationToken);
 
-        product.DecreaseInventoryCount();
+        product.EditInventoryCount(inventoryCount);
 
         await repository
             .UpdateAsync(product, cancellationToken: cancellationToken);
@@ -68,17 +67,11 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         return product.ToDto();
     }
 
-    public async Task<ProductDto> DecreaseInventoryCount(Guid productId,
-        CancellationToken cancellationToken = default)
+    public IEnumerable<ProductDto> GetAll(ushort pageIndex, ushort pageSize)
     {
-        var product = await FindAndValidate(productId, cancellationToken);
-
-        product.DecreaseInventoryCount();
-
-        await repository
-            .UpdateAsync(product, cancellationToken);
-
-        return product.ToDto();
+        return repository
+            .GetAll(pageIndex, pageSize)
+            .Select(product => product.ToDto());
     }
 
     private async Task<Product> FindAndValidate(Guid productId,

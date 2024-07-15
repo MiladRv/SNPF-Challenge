@@ -44,6 +44,14 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
             .DeleteAsync(user, cancellationToken:cancellationToken);
     }
 
+    public IEnumerable<UserDto> GetAll(uint pageIndex, ushort pageSize)
+    {
+        return repository
+            .GetAll(pageIndex, pageSize)
+            .Select(user => user.ToDto())
+            .ToList();
+    }
+
     private async Task<User> FindAndValidate(Guid userId,
         CancellationToken cancellationToken = default)
     {

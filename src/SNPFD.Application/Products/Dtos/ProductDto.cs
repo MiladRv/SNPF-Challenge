@@ -5,4 +5,7 @@ public sealed record ProductDto(
     string Title,
     uint InventoryCount,
     ulong Price,
-    double Discount) : BaseDto<Guid>(Id);
+    double Discount) : BaseDto<Guid>(Id)
+{
+    public ulong DiscountedPrice => (ulong)(Price * ((100 - Discount) / 100));
+}

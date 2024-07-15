@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using SNPFD.Application;
 using SNPFD.Infrastructure.Repository.DbContexts;
 
-namespace SNPFD.Infrastructure.Repository.UnitOfWork;
+namespace SNPFD.Infrastructure.Repository.UnitOfWorks;
 
 public sealed class UnitOfWork(
     SNPFDDbContext context,

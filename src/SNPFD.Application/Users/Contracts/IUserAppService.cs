@@ -16,4 +16,6 @@ public interface IUserAppService
 
     Task DeleteAsync(Guid userId,
         CancellationToken cancellationToken = default);
+
+    IEnumerable<UserDto> GetAll(uint pageIndex, ushort pageSize);
 }

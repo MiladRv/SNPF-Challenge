@@ -5,7 +5,7 @@ using SNPFD.Domain.Users;
 
 namespace SNPFD.Infrastructure.Repository.DbContexts;
 
-public class SNPFDDbContext : DbContext
+public sealed class SNPFDDbContext(DbContextOptions<SNPFDDbContext> options) : DbContext(options)
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -24,6 +24,6 @@ public class SNPFDDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
     
-    public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<Product> Products { get; set; }
+    public DbSet<User> Users { get; init; }
+    public DbSet<Product> Products { get;init; }
 }
