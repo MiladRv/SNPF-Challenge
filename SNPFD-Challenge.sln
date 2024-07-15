@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.WebApi", "SNPFD.WebApi\SNPFD.WebApi.csproj", "{328486BE-EB06-4B65-ACA0-C4B5E5CEF04A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.WebApi", "src\SNPFD.WebApi\SNPFD.WebApi.csproj", "{328486BE-EB06-4B65-ACA0-C4B5E5CEF04A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Domain", "SNPFD.Domain\SNPFD.Domain.csproj", "{7885047D-0719-410E-B9D1-D5A30209F0D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Domain", "src\SNPFD.Domain\SNPFD.Domain.csproj", "{7885047D-0719-410E-B9D1-D5A30209F0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Application", "SNPFD.Application\SNPFD.Application.csproj", "{78452D09-2098-4FD3-A589-B9492C3F7B3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Application", "src\SNPFD.Application\SNPFD.Application.csproj", "{78452D09-2098-4FD3-A589-B9492C3F7B3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Inrastructure", "SNPFD.Inrastructure\SNPFD.Inrastructure.csproj", "{73D9F714-A719-49C5-98B0-8AD72B34FE81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Inrastructure", "src\SNPFD.Inrastructure\SNPFD.Inrastructure.csproj", "{73D9F714-A719-49C5-98B0-8AD72B34FE81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Infrastructure.Repository", "SNPFD.Infrastructure.Repository\SNPFD.Infrastructure.Repository.csproj", "{482C9D43-8FAF-4ED5-8A2E-AC6D5824786F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Infrastructure.Repository", "src\SNPFD.Infrastructure.Repository\SNPFD.Infrastructure.Repository.csproj", "{482C9D43-8FAF-4ED5-8A2E-AC6D5824786F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Domain.Test", "SNPFD.Domain.Test\SNPFD.Domain.Test.csproj", "{40F1F539-5185-43B4-A230-1839A4E784B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Domain.Test", "test\SNPFD.Domain.Test\SNPFD.Domain.Test.csproj", "{40F1F539-5185-43B4-A230-1839A4E784B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Application.Test", "SNPFD.Application.Test\SNPFD.Application.Test.csproj", "{C88482C0-F5BE-4AF3-9C8D-FFCEA0CF32CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNPFD.Application.Test", "test\SNPFD.Application.Test\SNPFD.Application.Test.csproj", "{C88482C0-F5BE-4AF3-9C8D-FFCEA0CF32CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
