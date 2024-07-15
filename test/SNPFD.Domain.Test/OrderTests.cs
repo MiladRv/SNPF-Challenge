@@ -1,6 +1,6 @@
 using FluentAssertions;
-using SNPFD.Domain.Orders;
 using SNPFD.Domain.Users;
+using SNPFD.Domain.Users.Orders;
 
 namespace SNPFD.Domain.Test;
 

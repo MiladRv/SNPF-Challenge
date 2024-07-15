@@ -1,4 +1,4 @@
-namespace WebApi;
+namespace SNPFD.WebApi;
 
 public class WeatherForecast
 {
