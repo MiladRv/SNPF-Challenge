@@ -14,6 +14,9 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
             inputDto.Price,
             inputDto.Discount);
 
+        if (repository.ExistProductTitle(product.Title))
+            throw new Exception("there's any product with this title");
+
         await repository.AddAsync(product,
             cancellationToken: cancellationToken);
 
@@ -48,14 +51,19 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
             inputDto.Price,
             inputDto.Discount);
 
+        if (!product.Title.Equals(inputDto.Title, StringComparison.OrdinalIgnoreCase) &&
+            repository.ExistProductTitle(product.Title))
+            throw new Exception("there's any product with this title");
+
         await repository
             .UpdateAsync(product, cancellationToken: cancellationToken);
 
         return ProductExtensions.ToDto(ref product);
     }
 
- 
-    public async Task<ProductDto> EditInventoryCountAsync(Guid productId, uint inventoryCount, CancellationToken cancellationToken = default)
+
+    public async Task<ProductDto> EditInventoryCountAsync(Guid productId, uint inventoryCount,
+        CancellationToken cancellationToken = default)
     {
         var product = await FindAndValidate(productId, cancellationToken);
 
