@@ -1,18 +1,20 @@
+using SNPFD.Application.Orders.Contracts;
+using SNPFD.Application.Orders.Dtos;
 using SNPFD.Application.Products.Contracts;
-using SNPFD.Application.Purchases.Contracts;
-using SNPFD.Application.Purchases.Dtos;
 using SNPFD.Application.Users.Contracts;
+using SNPFD.Domain.Orders;
 using SNPFD.Domain.Products;
 using SNPFD.Domain.Users;
 
-namespace SNPFD.Application.Purchases;
+namespace SNPFD.Application.Orders;
 
-public sealed class PurchaseAppService(
+public sealed class OrderAppService(
     IProductRepository productRepository,
     IUserRepository userRepository,
-    IUnitOfWork unitOfWork) : IPurchaseAppService
+    IOrderRepository orderRepository,
+    IUnitOfWork unitOfWork) : IOrderAppService
 {
-    public async Task<PurchaseDto> CreateAsync(Guid userId, 
+    public async Task<PurchaseDto> CreateAsync(Guid userId,
         Guid productId,
         CancellationToken cancellationToken = default)
     {
@@ -22,30 +24,31 @@ public sealed class PurchaseAppService(
 
         product.DecreaseInventoryCount();
 
-        var order = user.AddOrder(product.Id);
+        var order = new Order(user.Id, product.Id);
 
         await productRepository
             .UpdateAsync(product,
                 saveChanges: false,
                 cancellationToken: cancellationToken);
 
-        await userRepository
-            .UpdateAsync(user,
+        await orderRepository
+            .AddAsync(order,
                 saveChanges: false,
                 cancellationToken: cancellationToken);
 
         await unitOfWork.CommitAsync();
 
-
-        return new PurchaseDto(user.Id,
-            user.Name,
-            product.Id,
-            product.Title,
-            product.Price,
-            order.Id,
-            order.CreationDate);
+        return order.ToPurchaseDto();
     }
 
+    public IEnumerable<PurchaseDto> FindByUserId(Guid userId,
+        uint pageIndex = 0,
+        ushort pageSize = 50)
+    {
+        return orderRepository
+            .GetByUserId(userId, pageIndex, pageSize)
+            .Select(order => order.ToPurchaseDto());
+    }
 
     private async Task<User> FindAndValidateUser(Guid userId,
         CancellationToken cancellationToken = default)

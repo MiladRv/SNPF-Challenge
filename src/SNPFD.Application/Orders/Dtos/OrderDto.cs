@@ -1,4 +1,4 @@
-namespace SNPFD.Application.Users.Orders.Dtos;
+namespace SNPFD.Application.Orders.Dtos;
 
 public sealed record OrderDto(
     Guid Id,

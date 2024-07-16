@@ -1,6 +1,9 @@
-namespace SNPFD.Domain.Users.Orders;
+using SNPFD.Domain.Products;
+using SNPFD.Domain.Users;
 
-public class Order : EntityBase<Guid>
+namespace SNPFD.Domain.Orders;
+
+public class Order : AggregateRoot<Guid>
 {
     //note: ef core needs parameterless constructor
     public Order()
@@ -19,7 +22,8 @@ public class Order : EntityBase<Guid>
     public DateTime CreationDate { get; private set; }
 
     public Guid UserId { get; private set; }
-    public virtual User User { get; set; }
+    public virtual User User { get; init; }
 
     public Guid ProductId { get; private set; }
+    public virtual Product Product { get; init; }
 }

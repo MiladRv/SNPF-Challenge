@@ -36,6 +36,7 @@ public class Product : AggregateRoot<Guid>
     public uint InventoryCount { get; private set; }
     public ulong Price { get; private set; }
     public double Discount { get; private set; }
+    public ulong DiscountedPrice => (ulong)(Price * ((100 - Discount) / 100));
 
 
     private static void ValidateTitle(string title)
