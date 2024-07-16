@@ -8,11 +8,13 @@ using SNPFD.Application.Users.Dtos;
 
 namespace SNPFD.WebApi.Workers;
 
-public class SeedDataWorker : BackgroundService
+/// <summary>
+/// this worker will creat some initial data
+/// </summary>
+public sealed class SeedDataWorker : BackgroundService
 {
     private readonly IUserAppService _userAppService;
     private readonly IProductAppService _productAppService;
-    private readonly IOrderAppService _orderAppService;
     private const ushort SeedCount = 10;
     
     public SeedDataWorker(IServiceScopeFactory serviceScopeFactory)
@@ -21,15 +23,18 @@ public class SeedDataWorker : BackgroundService
 
         _userAppService = scope.ServiceProvider.GetRequiredService<IUserAppService>();
         _productAppService = scope.ServiceProvider.GetRequiredService<IProductAppService>();
-        _orderAppService = scope.ServiceProvider.GetRequiredService<IOrderAppService>();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="stoppingToken"></param>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         for (var i = 1; i < SeedCount; i++)
         {
-            var user = await CreateSomeUser();
-            var product = await CreateSomeProduct();
+            _ = await CreateSomeUser();
+            _ = await CreateSomeProduct();
         }
     }
 
