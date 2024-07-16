@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using SNPFD.Application;
 using SNPFD.Domain;
 
 namespace SNPFD.Infrastructure.Repository;
 
-public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
+public abstract class BaseRepository<TEntity, TKey>(
+    DbContext dbContext,
+    IMemoryCache cache) :
     IBaseRepository<TEntity, TKey>, IDisposable
     where TEntity : AggregateRoot<TKey>
     where TKey : struct
@@ -18,8 +21,12 @@ public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
     {
         var entityEntry = await DbSet.AddAsync(entity, cancellationToken);
 
-        if (saveChanges)
-            await dbContext.SaveChangesAsync(cancellationToken);
+        if (!saveChanges)
+            return entityEntry.Entity;
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        cache.Set(entityEntry.Entity.Id, entityEntry.Entity);
 
         return entityEntry.Entity;
     }
@@ -30,8 +37,11 @@ public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
     {
         DbSet.Remove(entity);
 
-        if (saveChanges)
-            await dbContext.SaveChangesAsync(cancellationToken);
+        if (!saveChanges)
+            return;
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+        cache.Remove(entity.Id);
     }
 
     public async Task<TEntity> UpdateAsync(TEntity entity,
@@ -43,15 +53,33 @@ public abstract class BaseRepository<TEntity, TKey>(DbContext dbContext) :
 
         var entityEntry = DbSet.Update(entity);
 
-        if (saveChanges)
-            await dbContext.SaveChangesAsync(cancellationToken);
+        if (!saveChanges)
+            return entityEntry.Entity;
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+        cache.Set(entity.Id, entity);
 
         return entityEntry.Entity;
     }
 
-    public async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken) =>
-        await DbSet
+    public async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken)
+    {
+        if (cache.TryGetValue(id, out var cachedObject))
+        {
+            return (TEntity?)cachedObject;
+        }
+
+        var entity = await DbSet
             .FirstOrDefaultAsync(t => t.Id.Equals(id), cancellationToken);
+
+        if (entity is null)
+            return null;
+        
+        cache.Set(id, entity);
+
+        return entity;
+    }
+
 
     protected virtual void Dispose(bool disposing)
     {

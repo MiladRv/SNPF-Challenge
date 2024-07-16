@@ -1,6 +1,5 @@
 using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
-using SNPFD.Application.Orders.Contracts;
 using SNPFD.Application.Products.Contracts;
 using SNPFD.Application.Products.Dtos;
 using SNPFD.Application.Users.Contracts;
@@ -16,13 +15,14 @@ public sealed class SeedDataWorker : BackgroundService
     private readonly IUserAppService _userAppService;
     private readonly IProductAppService _productAppService;
     private const ushort SeedCount = 10;
+    private readonly IServiceScope _serviceScope;
     
     public SeedDataWorker(IServiceScopeFactory serviceScopeFactory)
     {
-        var scope = serviceScopeFactory.CreateScope();
+        _serviceScope = serviceScopeFactory.CreateScope();
 
-        _userAppService = scope.ServiceProvider.GetRequiredService<IUserAppService>();
-        _productAppService = scope.ServiceProvider.GetRequiredService<IProductAppService>();
+        _userAppService = _serviceScope.ServiceProvider.GetRequiredService<IUserAppService>();
+        _productAppService = _serviceScope.ServiceProvider.GetRequiredService<IProductAppService>();
     }
 
     /// <summary>
@@ -36,6 +36,8 @@ public sealed class SeedDataWorker : BackgroundService
             _ = await CreateSomeUser();
             _ = await CreateSomeProduct();
         }
+        
+        _serviceScope.Dispose();
     }
 
     private async Task<UserDto> CreateSomeUser()

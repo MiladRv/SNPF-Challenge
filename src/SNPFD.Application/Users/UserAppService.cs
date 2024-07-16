@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using SNPFD.Application.Users.Contracts;
 using SNPFD.Application.Users.Dtos;
 using SNPFD.Domain.Users;
@@ -12,7 +13,7 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
 
         await repository.AddAsync(user, cancellationToken:cancellationToken);
 
-        return user.ToDto();
+        return UserExtensions.ToDto(ref user);
     }
 
     public async Task<UserDto> FindByIdAsync(Guid userId, CancellationToken cancellationToken = default)
@@ -20,7 +21,7 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
         var user = await FindAndValidate(userId,
             cancellationToken);
 
-        return user.ToDto();
+        return UserExtensions.ToDto(ref user);
     }
 
     public async Task<UserDto> EditAsync(Guid userId, string name, CancellationToken cancellationToken = default)
@@ -33,7 +34,7 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
         await repository
             .UpdateAsync(user, cancellationToken:cancellationToken);
 
-        return user.ToDto();
+        return UserExtensions.ToDto(ref user);
     }
 
     public async Task DeleteAsync(Guid userId, CancellationToken cancellationToken = default)
@@ -48,7 +49,6 @@ public sealed class UserAppService(IUserRepository repository) : IUserAppService
     {
         return repository
             .GetAll(pageIndex, pageSize)
-            .Select(user => user.ToDto())
             .ToList();
     }
 

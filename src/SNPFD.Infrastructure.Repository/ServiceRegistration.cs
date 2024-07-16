@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using SNPFD.Application;
 using SNPFD.Application.Orders.Contracts;
@@ -20,11 +20,14 @@ public static class ServiceRegistration
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
-        
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddMemoryCache(options => { options.ExpirationScanFrequency = TimeSpan.FromSeconds(2); });
+
         services.AddDbContext<SNPFDDbContext>(builder => builder
-                // .UseInMemoryDatabase("SnappFood")
+            // .UseInMemoryDatabase("SnappFood")
             .UseNpgsql("Server=localhost;Port=5432;Database=SnappFood_1;UserId=postgres;Password=postgres;")
+            .EnableDetailedErrors()
         );
     }
 }

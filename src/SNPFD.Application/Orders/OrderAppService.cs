@@ -14,7 +14,7 @@ public sealed class OrderAppService(
     IOrderRepository orderRepository,
     IUnitOfWork unitOfWork) : IOrderAppService
 {
-    public async Task<PurchaseDto> CreateAsync(Guid userId,
+    public async Task<OrderDto> CreateAsync(Guid userId,
         Guid productId,
         CancellationToken cancellationToken = default)
     {
@@ -38,7 +38,7 @@ public sealed class OrderAppService(
 
         await unitOfWork.CommitAsync();
 
-        return order.ToPurchaseDto();
+        return OrderExtensions.ToDto(ref order);
     }
 
     public IEnumerable<PurchaseDto> FindByUserId(Guid userId,
@@ -46,8 +46,7 @@ public sealed class OrderAppService(
         ushort pageSize = 50)
     {
         return orderRepository
-            .GetByUserId(userId, pageIndex, pageSize)
-            .Select(order => order.ToPurchaseDto());
+            .GetByUserId(userId, pageIndex, pageSize);
     }
 
     private async Task<User> FindAndValidateUser(Guid userId,

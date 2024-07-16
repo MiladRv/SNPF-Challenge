@@ -20,5 +20,5 @@ public interface IProductAppService
         uint inventoryCount, 
         CancellationToken cancellationToken = default);
 
-    IEnumerable<ProductDto> GetAll(ushort pageIndex, ushort pageSize);
+    IEnumerable<ProductDto> GetAll(uint pageIndex, ushort pageSize);
 }

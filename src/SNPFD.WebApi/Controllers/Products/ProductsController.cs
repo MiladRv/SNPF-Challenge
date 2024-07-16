@@ -93,7 +93,8 @@ public sealed class ProductsController(IProductAppService productAppService) : C
     /// <param name="pageSize"></param>
     /// <returns></returns>
     [HttpGet]
-    public IActionResult GetAll(ushort pageIndex, [Range(1, 100)] ushort pageSize)
+    public IActionResult GetAll(   [FromQuery] uint pageIndex = 0,
+        [Range(1, 100)] [FromQuery] ushort pageSize = 50)
     {
         var products = productAppService
             .GetAll(pageIndex, pageSize);
