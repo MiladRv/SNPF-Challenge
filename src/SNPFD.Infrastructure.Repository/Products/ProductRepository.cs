@@ -17,4 +17,11 @@ public sealed class ProductRepository(SNPFDDbContext dbContext, IMemoryCache mem
             .Skip((int)(pageIndex * pageSize))
             .Take(pageSize);
     }
+
+    public bool ExistProductTitle(string title)
+    {
+        return DbSet
+            .AsNoTracking()
+            .Any(product => product.Title.Equals(title));
+    }
 }

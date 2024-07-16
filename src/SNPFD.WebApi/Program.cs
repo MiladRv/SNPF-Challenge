@@ -81,4 +81,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+app.UseSerilogRequestLogging();
+
 app.Run();
