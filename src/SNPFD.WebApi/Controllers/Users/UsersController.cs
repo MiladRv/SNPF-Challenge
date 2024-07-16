@@ -92,7 +92,7 @@ public class UsersController(
     [HttpGet("{id:guid}/orders")]
     public IActionResult GetUserOrders([FromRoute] Guid id,
         [FromQuery] uint pageIndex = 0,
-        [Range(1, 00)] [FromQuery] ushort pageSize = 50)
+        [Range(1, 100)] [FromQuery] ushort pageSize = 50)
     {
         var orders = orderAppService.FindByUserId(id,
             pageIndex,

@@ -3,9 +3,9 @@ using SNPFD.Domain.Users;
 
 namespace SNPFD.Application.Users.Contracts;
 
-internal static class UserExtensions
+public static class UserExtensions
 {
-    public static UserDto ToDto(this User user)
+    public static UserDto ToDto(ref User user)
     {
         return new UserDto(user.Id,
             user.Name);

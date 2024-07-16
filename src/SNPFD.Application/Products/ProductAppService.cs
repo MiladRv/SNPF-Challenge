@@ -17,7 +17,7 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         await repository.AddAsync(product,
             cancellationToken: cancellationToken);
 
-        return product.ToDto();
+        return ProductExtensions.ToDto(ref product);
     }
 
     public async Task<ProductDto> FindByIdAsync(Guid productId,
@@ -25,7 +25,7 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
     {
         var product = await FindAndValidate(productId, cancellationToken);
 
-        return product.ToDto();
+        return ProductExtensions.ToDto(ref product);
     }
 
     public async Task DeleteAsync(Guid productId,
@@ -51,7 +51,7 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         await repository
             .UpdateAsync(product, cancellationToken: cancellationToken);
 
-        return product.ToDto();
+        return ProductExtensions.ToDto(ref product);
     }
 
  
@@ -64,14 +64,14 @@ public sealed class ProductAppService(IProductRepository repository) : IProductA
         await repository
             .UpdateAsync(product, cancellationToken: cancellationToken);
 
-        return product.ToDto();
+        return ProductExtensions.ToDto(ref product);
     }
 
-    public IEnumerable<ProductDto> GetAll(ushort pageIndex, ushort pageSize)
+    public IEnumerable<ProductDto> GetAll(uint pageIndex, ushort pageSize)
     {
         return repository
             .GetAll(pageIndex, pageSize)
-            .Select(product => product.ToDto());
+            .Select(product => ProductExtensions.ToDto(ref product));
     }
 
     private async Task<Product> FindAndValidate(Guid productId,

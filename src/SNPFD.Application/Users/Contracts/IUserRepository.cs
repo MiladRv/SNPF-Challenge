@@ -5,5 +5,5 @@ namespace SNPFD.Application.Users.Contracts;
 
 public interface IUserRepository : IBaseRepository<User, Guid>
 {
-    IEnumerable<User> GetAll(uint pageIndex, ushort pageSize);
+    IEnumerable<UserDto> GetAll(uint pageIndex, ushort pageSize);
 }

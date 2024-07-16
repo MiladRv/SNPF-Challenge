@@ -5,7 +5,7 @@ namespace SNPFD.Application.Products.Contracts;
 
 internal static class ProductExtensions
 {
-    public static ProductDto ToDto(this Product product)
+    public static ProductDto ToDto(ref Product product)
     {
         return new ProductDto(product.Id,
             product.Title,

@@ -4,7 +4,7 @@ namespace SNPFD.Application.Orders.Contracts;
 
 public interface IOrderAppService
 {
-    Task<PurchaseDto> CreateAsync(Guid userId,
+    Task<OrderDto> CreateAsync(Guid userId,
         Guid productId,
         CancellationToken cancellationToken = default);
     

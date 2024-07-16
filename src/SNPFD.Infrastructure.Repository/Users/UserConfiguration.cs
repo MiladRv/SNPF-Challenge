@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SNPFD.Domain.Orders;
 using SNPFD.Domain.Users;
 
 namespace SNPFD.Infrastructure.Repository.Users;
