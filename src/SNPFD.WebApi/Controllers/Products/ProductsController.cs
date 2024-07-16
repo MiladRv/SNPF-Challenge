@@ -30,6 +30,12 @@ public sealed class ProductsController(IProductAppService productAppService) : C
         return Ok(productDto);
     }
 
+    /// <summary>
+    /// get a product by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> FindById(Guid id,
         CancellationToken cancellationToken = default)
@@ -40,6 +46,13 @@ public sealed class ProductsController(IProductAppService productAppService) : C
         return Ok(productDto);
     }
 
+    /// <summary>
+    /// edit the product's details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="requestDto"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> EditAsync([FromRoute] Guid id,
         EditProductRequestDto requestDto,
@@ -53,6 +66,13 @@ public sealed class ProductsController(IProductAppService productAppService) : C
         return Ok(productDto);
     }
 
+    /// <summary>
+    /// edit inventory count of product
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="requestDto"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPatch("{id:guid}/inventoryCounts")]
     public async Task<IActionResult> EditInventoryCountAsync([FromRoute] Guid id,
         EditInventoryCountRequestDto requestDto,
@@ -66,6 +86,12 @@ public sealed class ProductsController(IProductAppService productAppService) : C
         return Ok(productDto);
     }
 
+    /// <summary>
+    /// get all of products
+    /// </summary>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult GetAll(ushort pageIndex, [Range(1, 100)] ushort pageSize)
     {
